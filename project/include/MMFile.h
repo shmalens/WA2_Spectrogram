@@ -12,15 +12,31 @@
 // потоками и процессами
 
 namespace mmf {
+    namespace except {
+        class FileOpenErr : std::exception {
+            const char *what() const noexcept override { return "Error. File not open"; }
+        };
+
+        class MemoryMapError : std::exception {
+            const char *what() const noexcept override { return "Error. File cannot be mapped"; }
+        };
+
+        class EmptyFile : std::exception {
+            const char *what() const noexcept override { return "Error. File is empty"; }
+        };
+    }
+
     class MMFile {
     public:
         MMFile() : m_fd(0), m_fileSize(0), m_filePtr(nullptr) {}
 
         explicit MMFile(const std::string &fileName);
 
+        MMFile(const MMFile &rhs) = delete;
+
         ~MMFile();
 
-        std::string_view& GetView();
+        inline std::string_view &GetView() { return m_view; }
 
     private:
         int m_fd;

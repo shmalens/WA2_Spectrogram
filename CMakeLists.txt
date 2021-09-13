@@ -30,11 +30,12 @@ if (TEST)
     enable_testing()
 
     # Create binaries of tests
-    add_executable(tutor_test tests/tutor.cpp)
-    target_link_libraries(tutor_test gtest_main)
+    add_executable(mmfile_tests tests/MMFileTests.cpp)
+    target_link_libraries(mmfile_tests gtest_main)
+    target_link_libraries(mmfile_tests MMFile)
 
     # Needs to discover cmake test system how to find
     # my tests binaries and use it
     include(GoogleTest)
-    gtest_discover_tests(tutor_test)
+    gtest_discover_tests(mmfile_tests)
 endif ()
