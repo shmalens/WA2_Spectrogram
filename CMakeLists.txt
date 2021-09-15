@@ -4,18 +4,18 @@ project(WAV2_Spectrogram)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -Wpedantic -ggdb3")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -Wpedantic -ggdb3 -O3")
 set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -ggdb3")
 
 set(EXECUTABLE_NAME main)
 
-add_executable(EXECUTABLE_NAME project/main.cpp)
+add_executable(${EXECUTABLE_NAME} project/main.cpp)
 
 include_directories(project/include)
 
 add_library(MMFile STATIC project/src/MMFile.cpp)
 
-target_link_libraries(EXECUTABLE_NAME MMFile)
+target_link_libraries(${EXECUTABLE_NAME} MMFile)
 
 option(TEST "Build tests" OFF)
 if (TEST)

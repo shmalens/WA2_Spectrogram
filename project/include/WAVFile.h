@@ -1,0 +1,8 @@
+#ifndef WAV2_SPECTROGRAM_WAVFILE_H
+#define WAV2_SPECTROGRAM_WAVFILE_H
+
+namespace wav {
+
+}
+
+#endif //WAV2_SPECTROGRAM_WAVFILE_H

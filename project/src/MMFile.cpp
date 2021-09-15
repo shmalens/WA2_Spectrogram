@@ -2,6 +2,7 @@
 
 #include <string>
 #include <exception>
+#include <memory>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -26,17 +27,17 @@ namespace mmf {
         }
 
         m_fileSize = tmp_stat.st_size;
-        m_filePtr = (char *) mmap(nullptr, m_fileSize, PROT_READ, MAP_PRIVATE, m_fd, 0);
-        if (m_filePtr == MAP_FAILED) {
+        char *filePtr = (char *) mmap(nullptr, m_fileSize, PROT_READ, MAP_PRIVATE, m_fd, 0);
+        if (filePtr == MAP_FAILED) {
             close(m_fd);
             throw except::MemoryMapError();
         }
+        m_filePtr = std::shared_ptr<char>(filePtr, [this](char *ptr) { munmap(ptr, m_fileSize); });
 
-        m_view = {m_filePtr, m_fileSize};
+        m_view = {m_filePtr.get(), m_fileSize};
     }
 
     MMFile::~MMFile() {
-        munmap(m_filePtr, m_fileSize);
         close(m_fd);
     }
 

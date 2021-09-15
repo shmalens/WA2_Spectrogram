@@ -3,7 +3,7 @@
 
 #include "MMFile.h"
 
-#define FILE_PATH "../tmp/test_file"
+#define FILE_PATH "../tests/test_files/mmfile_test_file1"
 
 int main() {
     mmf::MMFile file_wrapper(FILE_PATH);

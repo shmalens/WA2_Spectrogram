@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <exception>
 #include <iostream>
+#include <memory>
 
 // Такой врапер кстати можно расширить
 // на функциональность для работы между
@@ -32,8 +33,6 @@ namespace mmf {
 
         explicit MMFile(const std::string &fileName);
 
-        MMFile(const MMFile &rhs) = delete;
-
         ~MMFile();
 
         inline std::string_view &GetView() { return m_view; }
@@ -41,13 +40,9 @@ namespace mmf {
     private:
         int m_fd;
         size_t m_fileSize;
-        char *m_filePtr;
+        std::shared_ptr<char> m_filePtr;
         std::string_view m_view;
     };
-
-    namespace exceptions {
-
-    }
 }
 
 #endif //WAV2_SPECTROGRAM_MMFILE_H
